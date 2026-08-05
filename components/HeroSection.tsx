@@ -41,28 +41,6 @@ export default function HeroSection() {
         >
           {/* Text removed */}
         </motion.p>
-
-        {/* CTA Button - Removed text */}
-        <motion.a
-          href="#story"
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
-          whileHover={{ scale: 1.05 }}
-          className="btn-primary mt-8 inline-block rounded-full px-8 py-3 font-cairo text-base font-bold"
-        >
-          {/* Text removed */}
-        </motion.a>
-
-        {/* Decorative line */}
-        <motion.div
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
-          className="yemen-thread mx-auto mt-8 w-24 origin-center"
-        />
       </div>
     </section>
   );
