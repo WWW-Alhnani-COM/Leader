@@ -19,7 +19,7 @@ const tajawal = Tajawal({
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#FFF5D6",
+  themeColor: "#f28c28", // تغيير إلى برتقالي
 };
 
 export const metadata: Metadata = {
@@ -89,7 +89,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ar" dir="rtl" className={`${cairo.variable} ${tajawal.variable}`}>
-      <body className="font-cairo bg-cream text-ink antialiased">
+      <body 
+        className="font-cairo text-ink antialiased"
+        style={{
+          backgroundImage: "url('/Background.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed",
+          minHeight: "100vh",
+        }}
+      >
         {children}
       </body>
     </html>
