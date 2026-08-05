@@ -86,7 +86,7 @@ export default function StorySection() {
           className="mt-6 border-e-4 border-mango pe-4 font-cairo italic leading-relaxed text-muted backdrop-blur-sm"
         >
           <Typewriter
-            text=""إطلاق منتج ليدر ليس مجر�� إضافة تجارية، بل هو التزام منا بالاستمرار في نهج التميز والجودة التي طالما عرفت بها مجموعة عتيبة وشركة رويان.""
+            text={"إطلاق منتج ليدر ليس مجرد إضافة تجارية، بل هو التزام منا بالاستمرار في نهج التميز والجودة."}
             delay={0.8}
           />
           <motion.footer
