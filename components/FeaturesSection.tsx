@@ -5,19 +5,19 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const features = [
   {
-    icon: "🇾🇪",
-    title: "هوية يمنية خالصة",
-    body: "يعتمد بشكل كامل على أجود أنواع المانجو وغيرها من المحاصيل الزراعية اليمنية. هذا المنتج دعم حقيقي للمزارع اليمني والاقتصاد الوطني.",
+    icon: "",
+    title: "", // تم إزالة النص
+    body: "", // تم إزالة النص
   },
   {
-    icon: "🏭",
-    title: "معايير عالمية وجودة فائقة",
-    body: "يُصنع في اليمن بمصنع ليدر للعصائر الفاخرة، وفق أحدث التقنيات وخطوط الإنتاج المتوافقة مع معايير الجودة الدولية والمواصفات العالمية.",
+    icon: "",
+    title: "", // تم إزالة النص
+    body: "", // تم إزالة النص
   },
   {
-    icon: "💪",
-    title: "ثقة وخبرة عريقة",
-    body: "ينطلق من رحم مجموعة رويان العريقة التابعة لمجموعة عبدالله عتيبة ��لتجارية، المشهود لها بالتميز والاحترافية عبر عقود من الخبرة.",
+    icon: "",
+    title: "", // تم إزالة النص
+    body: "", // تم إزالة النص
   },
 ];
 
@@ -33,7 +33,6 @@ export default function FeaturesSection() {
   const timerRef = useRef<number | null>(null);
 
   useEffect(() => {
-    // auto-advance every 5s
     timerRef.current = window.setInterval(() => {
       setDirection(1);
       setIndex((i) => (i + 1) % features.length);
@@ -46,7 +45,6 @@ export default function FeaturesSection() {
   function go(n: number) {
     setDirection(n > index ? 1 : -1);
     setIndex(((n % features.length) + features.length) % features.length);
-    // reset timer when user interacts
     if (timerRef.current) {
       window.clearInterval(timerRef.current);
       timerRef.current = window.setInterval(() => {
@@ -151,4 +149,4 @@ export default function FeaturesSection() {
       </div>
     </section>
   );
-}
+      }
