@@ -23,7 +23,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://leader-juice.com"),
+  metadataBase: new URL("https://leader-yemen-ed42.onrender.com"),
   title: {
     default: "ليدر | عصائر يمنية فاخرة - فخر الصناعة اليمنية",
     template: "%s | ليدر - عصائر يمنية",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     title: "ليدر | عصائر يمنية فاخرة - فخر الصناعة اليمنية",
     description:
       "أول منتج عصائر يمني بنكهة الأصالة وجودة العالم. اكتشف طعم الجودة اليمنية الأصيلة.",
-    url: "https://leader-juice.com",
+    url: "https://leader-yemen-ed42.onrender.com",
     siteName: "ليدر - عصائر يمنية فاخرة",
     images: [
       {
