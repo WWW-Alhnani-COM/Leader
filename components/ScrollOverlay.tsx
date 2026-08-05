@@ -7,26 +7,17 @@ interface ScrollOverlayProps {
   frame: number;
 }
 
-// These map to true physical screen sides (left/right), matching where the
-// product enters in each frame sequence - independent of the page's RTL
-// reading direction, which is why the wrapper below forces dir="ltr".
 const positionClasses: Record<string, string> = {
   center: "inset-0 items-center justify-center text-center",
   left: "inset-0 items-center justify-start text-left ps-8 md:ps-20",
   right: "inset-0 items-center justify-end text-right pe-8 md:pe-20",
 };
 
-/**
- * Displays the scene's synced headline/subtitle over the canvas, always on
- * the side opposite where the product enters the frame, per the brief's
- * scene table.
- */
 export default function ScrollOverlay({ frame }: ScrollOverlayProps) {
   const scene = sceneForFrame(frame);
   const opacity = overlayOpacity(scene, frame);
   const posClass = positionClasses[scene.textAlign];
 
-  // Scene 4 travels from the top toward the center as it plays.
   const localT =
     scene.id === 4
       ? Math.min(Math.max((frame - scene.start) / (scene.end - scene.start || 1), 0), 1)
@@ -50,10 +41,10 @@ export default function ScrollOverlay({ frame }: ScrollOverlayProps) {
             dir="rtl"
             className="max-w-md"
           >
-            <h2 className="font-cairo text-4xl font-extrabold text-mango drop-shadow-[0_2px_12px_rgba(0,0,0,0.25)] md:text-6xl">
+            <h2 className="font-cairo text-5xl font-extrabold text-mango drop-shadow-[0_2px_12px_rgba(0,0,0,0.25)] md:text-7xl">
               {scene.title}
             </h2>
-            <p className="mt-3 font-cairo text-lg font-semibold text-orange drop-shadow-[0_2px_10px_rgba(0,0,0,0.2)] md:text-2xl">
+            <p className="mt-3 font-cairo text-xl font-semibold text-yemen-green drop-shadow-[0_2px_10px_rgba(0,0,0,0.2)] md:text-3xl">
               {scene.subtitle}
             </p>
           </motion.div>
