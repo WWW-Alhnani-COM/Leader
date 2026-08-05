@@ -44,8 +44,8 @@ export default function BackgroundCanvas({ images, frame }: BackgroundCanvasProp
 
     if (!img || !img.complete || img.naturalWidth === 0) return;
 
-    // contain fit
-    const scale = Math.min(width / img.naturalWidth, height / img.naturalHeight);
+    // cover fit — fills the full viewport, cropping overflow
+    const scale = Math.max(width / img.naturalWidth, height / img.naturalHeight);
     const drawWidth = img.naturalWidth * scale;
     const drawHeight = img.naturalHeight * scale;
     const dx = (width - drawWidth) / 2;
