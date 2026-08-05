@@ -10,10 +10,16 @@ export function lerp(start: number, end: number, t: number): number {
   return start + (end - start) * t;
 }
 
-/** Build the public path for a given frame index (0-119). */
+/**
+ * Build the public path for a given frame index (0-119).
+ * Files are named ezgif-frame-001.jpg ... ezgif-frame-120.jpg
+ * (3-digit, 1-indexed) — this converts the internal 0-indexed
+ * frame number to that filename.
+ */
 export function framePath(index: number): string {
   const safe = clamp(Math.round(index), 0, TOTAL_FRAMES - 1);
-  return `/frames/frame_${safe}.jpg`;
+  const fileNumber = String(safe + 1).padStart(3, "0");
+  return `/frames/ezgif-frame-${fileNumber}.jpg`;
 }
 
 export type SceneId = 1 | 2 | 3 | 4;
