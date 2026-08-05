@@ -4,17 +4,17 @@ import { motion } from "framer-motion";
 
 const points = [
   {
-    number: ,
+    number: 1,
     title: "", // تم إزالة النص
     body: "", // تم إزالة النص
   },
   {
-    number: ,
+    number: 2 ,
     title: "", // تم إزالة النص
     body: "", // تم إزالة النص
   },
   {
-    number: ,
+    number: 3,
     title: "", // تم إزالة النص
     body: "", // تم إزالة النص
   },
