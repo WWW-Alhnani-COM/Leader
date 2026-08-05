@@ -16,6 +16,16 @@ export default function BackgroundCanvas({ images, frame }: BackgroundCanvasProp
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const sizeRef = useRef({ width: 0, height: 0, dpr: 1 });
   const lastFrameRef = useRef<number>(-1);
+  const backgroundImageRef = useRef<HTMLImageElement | null>(null);
+
+  // تحميل صورة الخلفية
+  useEffect(() => {
+    const img = new Image();
+    img.src = "/Background.png";
+    img.onload = () => {
+      backgroundImageRef.current = img;
+    };
+  }, []);
 
   const resize = () => {
     const canvas = canvasRef.current;
@@ -28,25 +38,37 @@ export default function BackgroundCanvas({ images, frame }: BackgroundCanvasProp
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
     sizeRef.current = { width, height, dpr };
-    lastFrameRef.current = -1; // force a repaint after resize
+    lastFrameRef.current = -1;
   };
 
   const draw = () => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
     const img = images.current[frame];
+    const bgImg = backgroundImageRef.current;
     if (!canvas || !ctx) return;
 
     const { width, height, dpr } = sizeRef.current;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    // base fill (cream)
-    ctx.fillStyle = "#FFF5D6";
-    ctx.fillRect(0, 0, width, height);
+    // رسم صورة الخلفية بدلاً من اللون
+    if (bgImg && bgImg.complete && bgImg.naturalWidth > 0) {
+      // cover fit للصورة الخلفية
+      const scale = Math.max(width / bgImg.naturalWidth, height / bgImg.naturalHeight);
+      const drawWidth = bgImg.naturalWidth * scale;
+      const drawHeight = bgImg.naturalHeight * scale;
+      const dx = (width - drawWidth) / 2;
+      const dy = (height - drawHeight) / 2;
+      ctx.drawImage(bgImg, dx, dy, drawWidth, drawHeight);
+    } else {
+      // fallback في حال لم تتحمل الصورة
+      ctx.fillStyle = "#FFF5D6";
+      ctx.fillRect(0, 0, width, height);
+    }
 
     if (!img || !img.complete || img.naturalWidth === 0) return;
 
-    // cover fit — fills the full viewport, cropping overflow
+    // cover fit للإطارات
     const scale = Math.max(width / img.naturalWidth, height / img.naturalHeight);
     const drawWidth = img.naturalWidth * scale;
     const drawHeight = img.naturalHeight * scale;
@@ -55,8 +77,8 @@ export default function BackgroundCanvas({ images, frame }: BackgroundCanvasProp
 
     ctx.drawImage(img, dx, dy, drawWidth, drawHeight);
 
-    // very subtle orange overlay to warm the background (شفافة جداً)
-    ctx.fillStyle = "rgba(242, 140, 40, 0.04)"; // var(--color-orange) with low alpha
+    // overlay خفيف جداً
+    ctx.fillStyle = "rgba(242, 140, 40, 0.04)";
     ctx.fillRect(0, 0, width, height);
   };
 
