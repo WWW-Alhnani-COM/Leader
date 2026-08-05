@@ -4,48 +4,119 @@ import { motion } from "framer-motion";
 
 const points = [
   {
+    number: 1,
     title: "دعم الاقتصاد الوطني",
     body: "تقليل فاتورة الاستيراد والاعتماد على الذات",
   },
   {
+    number: 2,
     title: "خلق فرص عمل",
     body: "توفير وظائف مباشرة وغير مباشرة للشباب اليمني",
   },
   {
+    number: 3,
     title: "طموح تصديري",
-    body: "نطمح لأن ننافس بمنتجنا الوطني في الأسواق الإقليمية قريباً، ونجعل من المنتج اليمني علامة فارقة في المنطقة",
+    body: "نطمح لأن ننافس بمنتجنا الوطني في الأسواق الإقليمية قريباً، ونجعل من المنتج اليمني علامة فارقة في المنطقة.",
   },
 ];
 
 export default function VisionSection() {
   return (
     <section id="vision" className="relative z-10 flex min-h-screen items-center px-6 py-24">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="content-card mx-auto max-w-2xl px-8 py-10 md:ml-auto md:mr-0"
-      >
-        <h2 className="font-cairo text-2xl font-extrabold text-orange md:text-3xl">
+      <div className="mx-auto max-w-2xl md:ml-auto md:mr-0">
+        {/* Title */}
+        <motion.h2
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="font-cairo text-2xl font-extrabold text-orange md:text-3xl"
+        >
           الرؤية والأثر الاقتصادي
-        </h2>
-        <p className="mt-4 font-cairo leading-relaxed text-ink">
+        </motion.h2>
+
+        {/* Intro paragraph */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          className="mt-4 font-cairo leading-relaxed text-ink backdrop-blur-sm"
+        >
           لا يقتصر منتج ليدر على كونه عصيراً فاخراً، بل هو مشروع وطني بطموح
           كبير:
-        </p>
-        <ul className="mt-6 space-y-4">
-          {points.map((p) => (
-            <li key={p.title} className="flex items-start gap-3">
-              <span className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-mango" />
-              <div>
-                <p className="font-cairo font-bold text-ink">{p.title}</p>
-                <p className="font-cairo text-sm text-muted">{p.body}</p>
+        </motion.p>
+
+        {/* Vertical timeline line */}
+        <motion.div
+          initial={{ scaleY: 0 }}
+          whileInView={{ scaleY: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+          className="absolute right-[50%] top-1/3 h-48 w-1 origin-top bg-gradient-to-b from-mango via-orange to-transparent md:right-auto md:left-[50%]"
+        />
+
+        {/* Vision points timeline */}
+        <motion.ul className="relative mt-8 space-y-6 md:mt-10">
+          {points.map((p, idx) => (
+            <motion.li
+              key={p.title}
+              initial={{ opacity: 0, x: idx % 2 === 0 ? -50 : 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{
+                duration: 0.6,
+                delay: 0.4 + idx * 0.2,
+                ease: "easeOut",
+              }}
+              className="flex items-start gap-4"
+            >
+              {/* Number circle */}
+              <motion.div
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.5 + idx * 0.2,
+                  ease: "easeOut",
+                }}
+                className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-mango to-orange text-sm font-bold text-ink"
+              >
+                {p.number}
+              </motion.div>
+
+              {/* Content */}
+              <div className="flex-1 pt-1">
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: 0.5 + idx * 0.2,
+                  }}
+                  className="font-cairo font-bold text-ink"
+                >
+                  {p.title}
+                </motion.p>
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: 0.6 + idx * 0.2,
+                  }}
+                  className="font-cairo text-sm text-muted backdrop-blur-sm"
+                >
+                  {p.body}
+                </motion.p>
               </div>
-            </li>
+            </motion.li>
           ))}
-        </ul>
-      </motion.div>
+        </motion.ul>
+      </div>
     </section>
   );
 }
