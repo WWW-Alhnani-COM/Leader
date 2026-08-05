@@ -2,28 +2,6 @@
 
 import { motion } from "framer-motion";
 
-const Typewriter = ({ text, delay = 0 }: { text: string; delay?: number }) => {
-  const characters = text.split("");
-  return (
-    <motion.span>
-      {characters.map((char, i) => (
-        <motion.span
-          key={i}
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{
-            duration: 0.02,
-            delay: delay + i * 0.02,
-          }}
-          viewport={{ once: true }}
-        >
-          {char}
-        </motion.span>
-      ))}
-    </motion.span>
-  );
-};
-
 export default function StorySection() {
   return (
     <section
@@ -31,7 +9,7 @@ export default function StorySection() {
       className="relative z-10 flex min-h-screen items-center px-6 py-24"
     >
       <div className="mx-auto max-w-2xl md:ml-auto md:mr-0">
-        {/* Title */}
+        {/* Title - Removed text */}
         <motion.h2
           initial={{ opacity: 0, x: -50 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -39,7 +17,7 @@ export default function StorySection() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="font-cairo text-2xl font-extrabold text-orange md:text-3xl"
         >
-          قصة المنتج
+          {/* Text removed */}
         </motion.h2>
 
         {/* Vertical line separator */}
@@ -51,7 +29,7 @@ export default function StorySection() {
           className="mt-3 h-1 w-16 origin-top bg-gradient-to-b from-mango to-orange"
         />
 
-        {/* First paragraph */}
+        {/* First paragraph - Removed text */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -59,12 +37,10 @@ export default function StorySection() {
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           className="mt-6 font-cairo leading-relaxed text-ink backdrop-blur-sm"
         >
-          يُعد عصير ليدر المنتج الوطني الجديد من مجموعة عبدالله عتيبة التجارية
-          وشركة رويان للاستثمار، اللتين تمتلكان خبرة واسعة في السوق اليمني عبر
-          مصنع مياه صنعاء.
+          {/* Text removed */}
         </motion.p>
 
-        {/* Second paragraph */}
+        {/* Second paragraph - Removed text */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -72,12 +48,10 @@ export default function StorySection() {
           transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
           className="mt-4 font-cairo leading-relaxed text-ink backdrop-blur-sm"
         >
-          تم تدشينه رسمياً في حفل كبير بالعاصمة صنعاء في مايو 2026، بحضور
-          مسؤولين ورجال أعمال، ليكون رسالة تؤكد أن الصناعة الوطنية قادرة على
-          المنافسة عندما تتوفر الرؤية والإدارة والاستثمار.
+          {/* Text removed */}
         </motion.p>
 
-        {/* Quote */}
+        {/* Quote - Removed text */}
         <motion.blockquote
           initial={{ opacity: 0, x: 50 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -85,10 +59,7 @@ export default function StorySection() {
           transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
           className="mt-6 border-e-4 border-mango pe-4 font-cairo italic leading-relaxed text-muted backdrop-blur-sm"
         >
-          <Typewriter
-            text={"إطلاق منتج ليدر ليس مجرد إضافة تجارية، بل هو التزام منا بالاستمرار في نهج التميز والجودة."}
-            delay={0.8}
-          />
+          {/* Text removed */}
           <motion.footer
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -96,7 +67,7 @@ export default function StorySection() {
             transition={{ duration: 0.6, delay: 1.2 }}
             className="mt-2 font-cairo text-sm font-bold not-italic text-orange"
           >
-            — الأستاذ محمد فايز معروف، المدير العام لشركة رويان
+            {/* Text removed */}
           </motion.footer>
         </motion.blockquote>
       </div>
