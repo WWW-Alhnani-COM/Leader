@@ -53,15 +53,11 @@ button:focus-visible {
   border-radius: 6px;
 }
 
-.content-card {
-  /* glassy translucent card
-     - subtle warm tint to stay on-brand
-     - thin light border and stronger backdrop blur for the frosted effect */
-  background: rgba(255, 245, 214, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  box-shadow: 0 8px 30px rgba(26, 26, 26, 0.08);
-  backdrop-filter: blur(10px) saturate(120%);
+/* Interactive text styling - no solid background */
+.interactive-text {
+  background: transparent;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .btn-primary {
