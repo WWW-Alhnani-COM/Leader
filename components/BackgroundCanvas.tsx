@@ -77,20 +77,20 @@ export default function BackgroundCanvas({ images, frame }: BackgroundCanvasProp
 
     ctx.drawImage(img, dx, dy, drawWidth, drawHeight);
 
-    // ✅ تدرج برتقالي (أكثر وضوحاً)
+    // ✅ تدرج برتقالي (قيم مرتفعة للظهور الواضح)
     const gradient = ctx.createRadialGradient(
       width / 2, height / 2, 0,
       width / 2, height / 2, Math.max(width, height) / 1.5
     );
-    gradient.addColorStop(0, "rgba(248, 201, 40, 0.06)");   // مانجو شفاف
-    gradient.addColorStop(0.5, "rgba(242, 140, 40, 0.10)"); // برتقالي شفاف
-    gradient.addColorStop(1, "rgba(242, 140, 40, 0.15)");   // برتقالي أغمق قليلاً
+    gradient.addColorStop(0, "rgba(248, 201, 40, 0.25)");   // مانجو شفاف 25%
+    gradient.addColorStop(0.5, "rgba(242, 140, 40, 0.35)"); // برتقالي شفاف 35%
+    gradient.addColorStop(1, "rgba(242, 140, 40, 0.45)");   // برتقالي أغمق 45%
     
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, width, height);
 
-    // ✅ طبقة زجاجية خفيفة جداً (تأثير blur زجاجي)
-    ctx.fillStyle = "rgba(255, 255, 255, 0.04)";
+    // ✅ طبقة زجاجية خفيفة
+    ctx.fillStyle = "rgba(255, 255, 255, 0.06)";
     ctx.fillRect(0, 0, width, height);
   };
 
@@ -115,4 +115,4 @@ export default function BackgroundCanvas({ images, frame }: BackgroundCanvasProp
       className="fixed inset-0 z-0 h-screen w-screen"
     />
   );
-}
+      }
