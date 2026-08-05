@@ -4,19 +4,19 @@ import { motion } from "framer-motion";
 
 const points = [
   {
-    number: 1,
-    title: "دعم الاقتصاد الوطني",
-    body: "تقليل فاتورة الاستيراد والاعتماد على الذات",
+    number: ,
+    title: "", // تم إزالة النص
+    body: "", // تم إزالة النص
   },
   {
-    number: 2,
-    title: "خلق فرص عمل",
-    body: "توفير وظائف مباشرة وغير مباشرة للشباب اليمني",
+    number: ,
+    title: "", // تم إزالة النص
+    body: "", // تم إزالة النص
   },
   {
-    number: 3,
-    title: "طموح تصديري",
-    body: "نطمح لأن ننافس بمنتجنا الوطني في الأسواق الإقليمية قريباً، ونجعل من المنتج اليمني علامة فارقة في المنطقة.",
+    number: ,
+    title: "", // تم إزالة النص
+    body: "", // تم إزالة النص
   },
 ];
 
@@ -24,7 +24,7 @@ export default function VisionSection() {
   return (
     <section id="vision" className="relative z-10 flex min-h-screen items-center px-6 py-24">
       <div className="mx-auto max-w-2xl md:ml-auto md:mr-0">
-        {/* Title */}
+        {/* Title - Removed text */}
         <motion.h2
           initial={{ opacity: 0, x: 50 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -32,10 +32,10 @@ export default function VisionSection() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="font-cairo text-2xl font-extrabold text-orange md:text-3xl"
         >
-          الرؤية والأثر الاقتصادي
+          {/* Text removed */}
         </motion.h2>
 
-        {/* Intro paragraph */}
+        {/* Intro paragraph - Removed text */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -43,8 +43,7 @@ export default function VisionSection() {
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           className="mt-4 font-cairo leading-relaxed text-ink backdrop-blur-sm"
         >
-          لا يقتصر منتج ليدر على كونه عصيراً فاخراً، بل هو مشروع وطني بطموح
-          كبير:
+          {/* Text removed */}
         </motion.p>
 
         {/* Vertical timeline line */}
