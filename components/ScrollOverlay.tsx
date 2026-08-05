@@ -41,10 +41,10 @@ export default function ScrollOverlay({ frame }: ScrollOverlayProps) {
             dir="rtl"
             className="max-w-md"
           >
-            <h2 className="font-cairo text-5xl font-extrabold text-mango drop-shadow-[0_2px_12px_rgba(0,0,0,0.25)] md:text-7xl">
+            <h2 className="font-cairo text-6xl font-extrabold text-mango drop-shadow-[0_2px_12px_rgba(0,0,0,0.25)] md:text-8xl">
               {scene.title}
             </h2>
-            <p className="mt-3 font-cairo text-xl font-semibold text-yemen-green drop-shadow-[0_2px_10px_rgba(0,0,0,0.2)] md:text-3xl">
+            <p className="mt-3 font-cairo text-2xl font-bold text-yemen-green drop-shadow-[0_2px_10px_rgba(0,0,0,0.2)] md:text-4xl">
               {scene.subtitle}
             </p>
           </motion.div>
