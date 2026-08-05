@@ -1,0 +1,89 @@
+export const TOTAL_FRAMES = 120;
+
+/** Clamp a number between min and max. */
+export function clamp(value: number, min: number, max: number): number {
+  return Math.min(Math.max(value, min), max);
+}
+
+/** Linear interpolation. */
+export function lerp(start: number, end: number, t: number): number {
+  return start + (end - start) * t;
+}
+
+/** Build the public path for a given frame index (0-119). */
+export function framePath(index: number): string {
+  const safe = clamp(Math.round(index), 0, TOTAL_FRAMES - 1);
+  return `/frames/frame_${safe}.jpg`;
+}
+
+export type SceneId = 1 | 2 | 3 | 4;
+
+export interface Scene {
+  id: SceneId;
+  start: number;
+  end: number;
+  entry: "top" | "right" | "left" | "bottom";
+  textAlign: "center" | "left" | "right";
+  title: string;
+  subtitle: string;
+}
+
+/** The four scenes exactly as specified in the brief. */
+export const SCENES: Scene[] = [
+  {
+    id: 1,
+    start: 0,
+    end: 29,
+    entry: "top",
+    textAlign: "center",
+    title: "ليدر",
+    subtitle: "نقاء بلا سكر",
+  },
+  {
+    id: 2,
+    start: 30,
+    end: 59,
+    entry: "right",
+    textAlign: "left",
+    title: "دقة في التصنيع",
+    subtitle: "كل التفاصيل محسوبة",
+  },
+  {
+    id: 3,
+    start: 60,
+    end: 89,
+    entry: "left",
+    textAlign: "right",
+    title: "هندسة متقدمة",
+    subtitle: "اكتشف ما في الداخل",
+  },
+  {
+    id: 4,
+    start: 90,
+    end: 119,
+    entry: "bottom",
+    textAlign: "center",
+    title: "جاهز للإطلاق",
+    subtitle: "عد للخلف لإعادة التشغيل",
+  },
+];
+
+/** Find which scene a frame index currently belongs to. */
+export function sceneForFrame(frame: number): Scene {
+  const found = SCENES.find((s) => frame >= s.start && frame <= s.end);
+  return found ?? SCENES[SCENES.length - 1];
+}
+
+/**
+ * Given a scene and the current frame, return an opacity 0-1 that fades the
+ * overlay text in for the first ~20% of the scene, holds, then fades out for
+ * the last ~20% - so the text never appears mid-snap and never blocks the
+ * product mid-motion.
+ */
+export function overlayOpacity(scene: Scene, frame: number): number {
+  const span = scene.end - scene.start || 1;
+  const t = clamp((frame - scene.start) / span, 0, 1);
+  const fadeIn = clamp(t / 0.2, 0, 1);
+  const fadeOut = clamp((1 - t) / 0.2, 0, 1);
+  return Math.min(fadeIn, fadeOut, 1);
+}
