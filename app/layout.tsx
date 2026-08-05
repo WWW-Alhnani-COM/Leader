@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     siteName: "ليدر - عصائر يمنية فاخرة",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "عصير ليدر - فخر الصناعة اليمنية",
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "ليدر | عصائر يمنية فاخرة - فخر الصناعة اليمنية",
     description: "أول منتج عصائر يمني بنكهة الأصالة وجودة العالم.",
-    images: ["/og-image.jpg"],
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
