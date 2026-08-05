@@ -14,7 +14,6 @@ export default function CTASection() {
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
           animate={{
             textShadow: [
               "0 0 10px rgba(248, 201, 40, 0.3)",
@@ -23,6 +22,8 @@ export default function CTASection() {
             ],
           }}
           transition={{
+            duration: 0.6,
+            ease: "easeOut",
             textShadow: {
               repeat: Infinity,
               duration: 2,
