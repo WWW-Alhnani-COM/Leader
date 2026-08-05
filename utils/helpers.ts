@@ -43,7 +43,7 @@ export const SCENES: Scene[] = [
     entry: "top",
     textAlign: "center",
     title: "ليدر",
-    subtitle: "نقاء بلا سكر",
+    subtitle: "جرب و بيننا",
   },
   {
     id: 2,
@@ -51,8 +51,8 @@ export const SCENES: Scene[] = [
     end: 59,
     entry: "right",
     textAlign: "left",
-    title: "دقة في التصنيع",
-    subtitle: "كل التفاصيل محسوبة",
+    title: "طعم الأصالة اليمنية",
+    subtitle: "جودة وطنية تنافس العالمية",
   },
   {
     id: 3,
@@ -60,8 +60,8 @@ export const SCENES: Scene[] = [
     end: 89,
     entry: "left",
     textAlign: "right",
-    title: "هندسة متقدمة",
-    subtitle: "اكتشف ما في الداخل",
+    title: "فخر اليمن",
+    subtitle: "دعم حقيقي لإنتاج مزارع تهامة",
   },
   {
     id: 4,
@@ -69,8 +69,8 @@ export const SCENES: Scene[] = [
     end: 119,
     entry: "bottom",
     textAlign: "center",
-    title: "جاهز للإطلاق",
-    subtitle: "عد للخلف لإعادة التشغيل",
+    title: "المانجو الحقيقية",
+    subtitle: "الطعم الذي يثبت نفسه",
   },
 ];
 
