@@ -78,7 +78,7 @@ export const metadata: Metadata = {
     canonical: "https://leader-juice.com",
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: "/favicon.png",
   },
 };
 
