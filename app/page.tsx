@@ -51,7 +51,6 @@ export default function Home() {
       <Navigation />
       <main className="relative">
         <HeroSection />
-        <StorySection />
         <FeaturesSection />
         <VisionSection />
         <CTASection />
