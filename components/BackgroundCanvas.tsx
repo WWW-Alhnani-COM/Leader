@@ -10,7 +10,7 @@ interface BackgroundCanvasProps {
 /**
  * Renders the current frame image onto a full-viewport fixed canvas,
  * behind all page content. Uses devicePixelRatio-aware sizing for crisp
- * rendering, and "contain" fit so the product is never cropped.
+ * rendering, and "cover" fit so the viewport is filled (overflow cropped).
  */
 export default function BackgroundCanvas({ images, frame }: BackgroundCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -39,6 +39,8 @@ export default function BackgroundCanvas({ images, frame }: BackgroundCanvasProp
 
     const { width, height, dpr } = sizeRef.current;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    // base fill (cream)
     ctx.fillStyle = "#FFF5D6";
     ctx.fillRect(0, 0, width, height);
 
@@ -52,6 +54,10 @@ export default function BackgroundCanvas({ images, frame }: BackgroundCanvasProp
     const dy = (height - drawHeight) / 2;
 
     ctx.drawImage(img, dx, dy, drawWidth, drawHeight);
+
+    // very subtle orange overlay to warm the background (شفافة جداً)
+    ctx.fillStyle = "rgba(242, 140, 40, 0.04)"; // var(--color-orange) with low alpha
+    ctx.fillRect(0, 0, width, height);
   };
 
   useEffect(() => {
