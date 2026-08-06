@@ -26,13 +26,6 @@ export default function Home() {
   const { frame } = useScrollFrame();
   const heroRef = useRef<HTMLDivElement>(null);
   const [heroHidden, setHeroHidden] = useState(false);
-  const [startFrame, setStartFrame] = useState(0);
-  const frameRef = useRef(0);
-
-  // تتبع قيمة الفريم الحالية
-  useEffect(() => {
-    frameRef.current = frame;
-  }, [frame]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,21 +40,19 @@ export default function Home() {
       hero.style.opacity = String(1 - scrollProgress);
       hero.style.transform = `translateY(${-scrollProgress * 80}px) scale(${1 - scrollProgress * 0.05})`;
       
-      // ✅ عندما يختفي الهيرو، نحفظ قيمة الفريم الحالية كقيمة بداية
-      if (scrollProgress >= 0.95 && !heroHidden) {
+      if (scrollProgress >= 0.95) {
         setHeroHidden(true);
-        setStartFrame(frameRef.current);
-      } else if (scrollProgress < 0.95 && heroHidden) {
+      } else {
         setHeroHidden(false);
       }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [heroHidden]);
+  }, []);
 
-  // ✅ حساب الفريم المعدل (يبدأ من 0 عند اختفاء الهيرو)
-  const adjustedFrame = heroHidden ? Math.max(0, frame - startFrame) : 0;
+  // ✅ استخدم frame مباشرة بدون تعديل
+  const displayFrame = heroHidden ? frame : 0;
 
   return (
     <>
@@ -80,7 +71,7 @@ export default function Home() {
           pointerEvents: 'none',
         }}
       >
-        <BackgroundCanvas images={images} frame={adjustedFrame} />
+        <BackgroundCanvas images={images} frame={displayFrame} />
       </div>
 
       <Navigation />
@@ -90,9 +81,9 @@ export default function Home() {
           <HeroSection />
         </div>
 
-        {/* الهيلبر - مع الفريم المعدل */}
+        {/* الهيلبر */}
         <div className="relative z-10">
-          <ScrollOverlay frame={adjustedFrame} isVisible={heroHidden} />
+          <ScrollOverlay frame={displayFrame} isVisible={heroHidden} />
         </div>
         
         {/* باقي الأقسام */}
@@ -102,9 +93,9 @@ export default function Home() {
           <CTASection />
         </div>
 
-        {/* ✅ مسافة تمرير إضافية لضمان الوصول إلى الإطار 120 */}
-        <div className="h-32 md:h-48 lg:h-64" />
+        {/* ✅ مسافة تمرير إضافية */}
+        <div className="h-48 md:h-64 lg:h-80" />
       </main>
     </>
   );
-            }
+}
