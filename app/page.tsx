@@ -101,7 +101,10 @@ export default function Home() {
           <VisionSection />
           <CTASection />
         </div>
+
+        {/* ✅ مسافة تمرير إضافية لضمان الوصول إلى الإطار 120 */}
+        <div className="h-32 md:h-48 lg:h-64" />
       </main>
     </>
   );
-}
+            }
