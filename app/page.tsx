@@ -25,7 +25,7 @@ export default function Home() {
   const { images } = useFramePreloader();
   const { frame } = useScrollFrame();
   const heroRef = useRef<HTMLDivElement>(null);
-  const [videoVisible, setVideoVisible] = useState(false);
+  const [heroHidden, setHeroHidden] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,18 +35,18 @@ export default function Home() {
       const rect = hero.getBoundingClientRect();
       const heroHeight = hero.offsetHeight;
       
-      // حساب مقدار التمرير بالنسبة لارتفاع الهيرو
-      const scrollProgress = Math.max(0, Math.min(1, (window.scrollY) / (heroHeight * 0.8)));
+      // حساب مقدار التمرير
+      const scrollProgress = Math.max(0, Math.min(1, (window.scrollY) / (heroHeight * 0.7)));
       
       // اختفاء الهيرو: يتلاشى ويتحرك للأعلى
       hero.style.opacity = String(1 - scrollProgress);
-      hero.style.transform = `translateY(${-scrollProgress * 50}px) scale(${1 - scrollProgress * 0.03})`;
+      hero.style.transform = `translateY(${-scrollProgress * 80}px) scale(${1 - scrollProgress * 0.05})`;
       
-      // عندما يختفي الهيرو تماماً (أكثر من 95%)، يظهر الفيديو
+      // عندما يختفي الهيرو تماماً، نضع الحالة إلى true
       if (scrollProgress >= 0.95) {
-        setVideoVisible(true);
+        setHeroHidden(true);
       } else {
-        setVideoVisible(false);
+        setHeroHidden(false);
       }
     };
 
@@ -63,12 +63,12 @@ export default function Home() {
 
       <div id="top" />
       
-      {/* خلفية الفيديو - تظهر فقط بعد اختفاء الهيرو */}
+      {/* خلفية الفيديو - تظهر تدريجياً بعد اختفاء الهيرو */}
       <div 
         className="fixed inset-0 z-0 transition-opacity duration-700"
         style={{
-          opacity: videoVisible ? 1 : 0,
-          pointerEvents: videoVisible ? 'auto' : 'none',
+          opacity: heroHidden ? 1 : 0,
+          pointerEvents: 'none',
         }}
       >
         <BackgroundCanvas images={images} frame={frame} />
@@ -78,7 +78,7 @@ export default function Home() {
       <Navigation />
       <main className="relative">
         {/* HeroSection - يختفي عند التمرير */}
-        <div ref={heroRef} className="relative z-10 transition-all duration-300">
+        <div ref={heroRef} className="relative z-10">
           <HeroSection />
         </div>
         
