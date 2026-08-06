@@ -26,6 +26,7 @@ export default function Home() {
   const { frame } = useScrollFrame();
   const heroRef = useRef<HTMLDivElement>(null);
   const [heroHidden, setHeroHidden] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,15 +36,21 @@ export default function Home() {
       const heroHeight = hero.offsetHeight;
       const scrollY = window.scrollY;
       
-      const scrollProgress = Math.max(0, Math.min(1, scrollY / (heroHeight * 0.7)));
+      const progress = Math.max(0, Math.min(1, scrollY / (heroHeight * 0.7)));
       
-      hero.style.opacity = String(1 - scrollProgress);
-      hero.style.transform = `translateY(${-scrollProgress * 80}px) scale(${1 - scrollProgress * 0.05})`;
+      hero.style.opacity = String(1 - progress);
+      hero.style.transform = `translateY(${-progress * 80}px) scale(${1 - progress * 0.05})`;
       
-      if (scrollProgress >= 0.95) {
+      if (progress >= 0.95) {
         setHeroHidden(true);
+        // ✅ حساب نسبة التمرير بعد اختفاء الهيرو
+        const remainingScroll = window.scrollY - heroHeight * 0.7;
+        const maxRemaining = document.documentElement.scrollHeight - window.innerHeight - heroHeight * 0.7;
+        const afterProgress = maxRemaining > 0 ? Math.min(remainingScroll / maxRemaining, 1) : 0;
+        setScrollProgress(afterProgress);
       } else {
         setHeroHidden(false);
+        setScrollProgress(0);
       }
     };
 
@@ -51,8 +58,8 @@ export default function Home() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // ✅ استخدم frame مباشرة بدون تعديل
-  const displayFrame = heroHidden ? frame : 0;
+  // ✅ حساب الإطار بناءً على نسبة التمرير بعد اختفاء الهيرو
+  const adjustedFrame = heroHidden ? Math.floor(scrollProgress * 119) : 0;
 
   return (
     <>
@@ -63,7 +70,6 @@ export default function Home() {
 
       <div id="top" />
       
-      {/* خلفية الفيديو */}
       <div 
         className="fixed inset-0 z-0 transition-opacity duration-700"
         style={{
@@ -71,29 +77,25 @@ export default function Home() {
           pointerEvents: 'none',
         }}
       >
-        <BackgroundCanvas images={images} frame={displayFrame} />
+        <BackgroundCanvas images={images} frame={adjustedFrame} />
       </div>
 
       <Navigation />
       <main className="relative">
-        {/* HeroSection */}
         <div ref={heroRef} className="relative z-10">
           <HeroSection />
         </div>
 
-        {/* الهيلبر */}
         <div className="relative z-10">
-          <ScrollOverlay frame={displayFrame} isVisible={heroHidden} />
+          <ScrollOverlay frame={adjustedFrame} isVisible={heroHidden} />
         </div>
         
-        {/* باقي الأقسام */}
         <div className="relative z-10">
           <FeaturesSection />
           <VisionSection />
           <CTASection />
         </div>
 
-        {/* ✅ مسافة تمرير إضافية */}
         <div className="h-48 md:h-64 lg:h-80" />
       </main>
     </>
