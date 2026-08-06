@@ -89,6 +89,14 @@ export function sceneForFrame(frame: number): Scene {
 export function overlayOpacity(scene: Scene, frame: number): number {
   const span = scene.end - scene.start || 1;
   const t = clamp((frame - scene.start) / span, 0, 1);
+  
+  // ✅ المشهد الرابع: يظهر ولا يختفي حتى الإطار 119
+  if (scene.id === 4) {
+    const fadeIn = clamp(t / 0.1, 0, 1);
+    return fadeIn;
+  }
+  
+  // المشاهد الأخرى: تلاشي دخول وخروج طبيعي (20%)
   const fadeIn = clamp(t / 0.2, 0, 1);
   const fadeOut = clamp((1 - t) / 0.2, 0, 1);
   return Math.min(fadeIn, fadeOut, 1);
