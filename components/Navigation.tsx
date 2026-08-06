@@ -11,7 +11,7 @@ export default function Navigation() {
         {/* Logo - حجم 10 */}
         <a href="#top" className="flex items-center">
           <img 
-            src="/logo.png" 
+            src="/Logo.png" 
             alt="ليدر" 
             className="h-10 w-auto"
           />
