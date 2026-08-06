@@ -90,10 +90,9 @@ export function overlayOpacity(scene: Scene, frame: number): number {
   const span = scene.end - scene.start || 1;
   const t = clamp((frame - scene.start) / span, 0, 1);
   
-  // ✅ المشهد الرابع: يظهر ولا يختفي حتى الإطار 119
+  // ✅ المشهد الرابع: يظهر كاملاً ولا يختفي
   if (scene.id === 4) {
-    const fadeIn = clamp(t / 0.1, 0, 1);
-    return fadeIn;
+    return 1; // يبقى ظاهراً طوال الوقت
   }
   
   // المشاهد الأخرى: تلاشي دخول وخروج طبيعي (20%)
