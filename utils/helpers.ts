@@ -10,12 +10,6 @@ export function lerp(start: number, end: number, t: number): number {
   return start + (end - start) * t;
 }
 
-/**
- * Build the public path for a given frame index (0-119).
- * Files are named ezgif-frame-001.jpg ... ezgif-frame-120.jpg
- * (3-digit, 1-indexed) — this converts the internal 0-indexed
- * frame number to that filename.
- */
 export function framePath(index: number): string {
   const safe = clamp(Math.round(index), 0, TOTAL_FRAMES - 1);
   const fileNumber = String(safe + 1).padStart(3, "0");
@@ -32,9 +26,9 @@ export interface Scene {
   textAlign: "center" | "left" | "right";
   title: string;
   subtitle: string;
+  extraText?: string; // ✅ حقل جديد للنص الإضافي
 }
 
-/** The four scenes exactly as specified in the brief. */
 export const SCENES: Scene[] = [
   {
     id: 1,
@@ -71,31 +65,23 @@ export const SCENES: Scene[] = [
     textAlign: "center",
     title: "المانجو الحقيقية",
     subtitle: "الطعم الذي يثبت نفسه",
+    extraText: "🇾🇪 منتج يمني 100%", // ✅ نص إضافي للمشهد الرابع
   },
 ];
 
-/** Find which scene a frame index currently belongs to. */
 export function sceneForFrame(frame: number): Scene {
   const found = SCENES.find((s) => frame >= s.start && frame <= s.end);
   return found ?? SCENES[SCENES.length - 1];
 }
 
-/**
- * Given a scene and the current frame, return an opacity 0-1 that fades the
- * overlay text in for the first ~20% of the scene, holds, then fades out for
- * the last ~20% - so the text never appears mid-snap and never blocks the
- * product mid-motion.
- */
 export function overlayOpacity(scene: Scene, frame: number): number {
   const span = scene.end - scene.start || 1;
   const t = clamp((frame - scene.start) / span, 0, 1);
   
-  // ✅ المشهد الرابع: يظهر كاملاً ولا يختفي
   if (scene.id === 4) {
-    return 1; // يبقى ظاهراً طوال الوقت
+    return 1;
   }
   
-  // المشاهد الأخرى: تلاشي دخول وخروج طبيعي (20%)
   const fadeIn = clamp(t / 0.2, 0, 1);
   const fadeOut = clamp((1 - t) / 0.2, 0, 1);
   return Math.min(fadeIn, fadeOut, 1);
