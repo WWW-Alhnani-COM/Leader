@@ -32,17 +32,17 @@ export default function Home() {
       const hero = heroRef.current;
       if (!hero) return;
       
-      const rect = hero.getBoundingClientRect();
       const heroHeight = hero.offsetHeight;
+      const scrollY = window.scrollY;
       
       // حساب مقدار التمرير
-      const scrollProgress = Math.max(0, Math.min(1, (window.scrollY) / (heroHeight * 0.7)));
+      const scrollProgress = Math.max(0, Math.min(1, scrollY / (heroHeight * 0.7)));
       
       // اختفاء الهيرو: يتلاشى ويتحرك للأعلى
       hero.style.opacity = String(1 - scrollProgress);
       hero.style.transform = `translateY(${-scrollProgress * 80}px) scale(${1 - scrollProgress * 0.05})`;
       
-      // عندما يختفي الهيرو تماماً، نضع الحالة إلى true
+      // عندما يختفي الهيرو تماماً (أكثر من 95%)، نبدأ بإظهار الفيديو والمشاهد
       if (scrollProgress >= 0.95) {
         setHeroHidden(true);
       } else {
@@ -63,7 +63,7 @@ export default function Home() {
 
       <div id="top" />
       
-      {/* خلفية الفيديو - تظهر تدريجياً بعد اختفاء الهيرو */}
+      {/* خلفية الفيديو - تظهر بعد اختفاء الهيرو */}
       <div 
         className="fixed inset-0 z-0 transition-opacity duration-700"
         style={{
@@ -72,7 +72,8 @@ export default function Home() {
         }}
       >
         <BackgroundCanvas images={images} frame={frame} />
-        <ScrollOverlay frame={frame} />
+        {/* ✅ تمرير isVisible للتحكم بظهور المشاهد */}
+        <ScrollOverlay frame={frame} isVisible={heroHidden} />
       </div>
 
       <Navigation />
