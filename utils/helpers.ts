@@ -1,4 +1,4 @@
-export const TOTAL_FRAMES = 120;
+export const TOTAL_FRAMES = 130;
 
 /** Clamp a number between min and max. */
 export function clamp(value: number, min: number, max: number): number {
