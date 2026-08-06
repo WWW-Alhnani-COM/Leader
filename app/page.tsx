@@ -26,6 +26,13 @@ export default function Home() {
   const { frame } = useScrollFrame();
   const heroRef = useRef<HTMLDivElement>(null);
   const [heroHidden, setHeroHidden] = useState(false);
+  const [startFrame, setStartFrame] = useState(0);
+  const frameRef = useRef(0);
+
+  // تتبع قيمة الفريم الحالية
+  useEffect(() => {
+    frameRef.current = frame;
+  }, [frame]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,16 +47,21 @@ export default function Home() {
       hero.style.opacity = String(1 - scrollProgress);
       hero.style.transform = `translateY(${-scrollProgress * 80}px) scale(${1 - scrollProgress * 0.05})`;
       
-      if (scrollProgress >= 0.95) {
+      // ✅ عندما يختفي الهيرو، نحفظ قيمة الفريم الحالية كقيمة بداية
+      if (scrollProgress >= 0.95 && !heroHidden) {
         setHeroHidden(true);
-      } else {
+        setStartFrame(frameRef.current);
+      } else if (scrollProgress < 0.95 && heroHidden) {
         setHeroHidden(false);
       }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [heroHidden]);
+
+  // ✅ حساب الفريم المعدل (يبدأ من 0 عند اختفاء الهيرو)
+  const adjustedFrame = heroHidden ? Math.max(0, frame - startFrame) : 0;
 
   return (
     <>
@@ -60,7 +72,7 @@ export default function Home() {
 
       <div id="top" />
       
-      {/* ✅ خلفية الفيديو - تظهر بعد اختفاء الهيرو */}
+      {/* خلفية الفيديو */}
       <div 
         className="fixed inset-0 z-0 transition-opacity duration-700"
         style={{
@@ -68,22 +80,22 @@ export default function Home() {
           pointerEvents: 'none',
         }}
       >
-        <BackgroundCanvas images={images} frame={frame} />
+        <BackgroundCanvas images={images} frame={adjustedFrame} />
       </div>
 
       <Navigation />
       <main className="relative">
-        {/* ✅ HeroSection */}
+        {/* HeroSection */}
         <div ref={heroRef} className="relative z-10">
           <HeroSection />
         </div>
 
-        {/* ✅ الهيلبر (ScrollOverlay) - يظهر بعد الهيرو */}
+        {/* الهيلبر - مع الفريم المعدل */}
         <div className="relative z-10">
-          <ScrollOverlay frame={frame} isVisible={heroHidden} />
+          <ScrollOverlay frame={adjustedFrame} isVisible={heroHidden} />
         </div>
         
-        {/* ✅ باقي الأقسام */}
+        {/* باقي الأقسام */}
         <div className="relative z-10">
           <FeaturesSection />
           <VisionSection />
