@@ -17,13 +17,18 @@ export default function LoadingScreen({ progress, visible }: LoadingScreenProps)
           transition={{ duration: 0.6, ease: "easeInOut" }}
           className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-cream"
         >
+          {/* GIF بدلاً من النص */}
           <motion.div
             animate={{ scale: [1, 1.06, 1] }}
             transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-            className="font-cairo text-3xl font-extrabold text-mango md:text-4xl"
           >
-            ليدر
+            <img 
+              src="/loading.gif"  // ضع ملف GIF في مجلد public
+              alt="جرب و بيننا" 
+              className="h-24 w-auto"
+            />
           </motion.div>
+          
           <p className="mt-3 font-cairo text-sm text-muted">
             جاري تحضير التجربة...
           </p>
