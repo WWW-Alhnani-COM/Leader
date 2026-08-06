@@ -5,7 +5,7 @@ import { SCENES, overlayOpacity, sceneForFrame } from "@/utils/helpers";
 
 interface ScrollOverlayProps {
   frame: number;
-  isVisible?: boolean; // ✅ إضافة خاصية للتحكم بالظهور
+  isVisible?: boolean;
 }
 
 const positionClasses: Record<string, string> = {
@@ -25,7 +25,6 @@ export default function ScrollOverlay({ frame, isVisible = true }: ScrollOverlay
       : 0;
   const translateY = scene.id === 4 ? -60 + localT * 60 : 0;
 
-  // ✅ إذا كان isVisible false، لا نعرض أي شيء
   if (!isVisible) return null;
 
   return (
@@ -48,7 +47,7 @@ export default function ScrollOverlay({ frame, isVisible = true }: ScrollOverlay
             <h2 className="font-cairo text-4xl font-extrabold text-mango drop-shadow-[0_2px_12px_rgba(0,0,0,0.25)] md:text-6xl">
               {scene.title}
             </h2>
-            <p className="mt-3 font-cairo text-xl font-bold text-yemen-green drop-shadow-[0_2px_10px_rgba(0,0,0,0.2)] md:text-2xl [-webkit-text-stroke:0.5px_rgba(255,255,255,0.3)]">
+            <p className="mt-3 font-cairo text-xl font-bold text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.2)] md:text-2xl [-webkit-text-stroke:0.5px_rgba(255,255,255,0.3)]">
               {scene.subtitle}
             </p>
           </motion.div>
