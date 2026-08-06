@@ -6,14 +6,14 @@ export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 z-50 w-full bg-white/10 backdrop-blur-md border-b border-white/10 px-6 py-4">
+    <nav className="fixed top-0 z-50 w-full bg-transparent backdrop-blur-sm px-6 py-4">
       <div className="mx-auto flex max-w-6xl items-center justify-between">
         {/* Logo - حجم 10 */}
         <a href="#top" className="flex items-center">
           <img 
             src="/logo.png" 
             alt="ليدر" 
-            className="h-10 w-auto"  // تم التغيير إلى h-10
+            className="h-10 w-auto"
           />
         </a>
 
