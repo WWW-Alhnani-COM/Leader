@@ -5,6 +5,7 @@ import { SCENES, overlayOpacity, sceneForFrame } from "@/utils/helpers";
 
 interface ScrollOverlayProps {
   frame: number;
+  isVisible?: boolean; // ✅ إضافة خاصية للتحكم بالظهور
 }
 
 const positionClasses: Record<string, string> = {
@@ -13,7 +14,7 @@ const positionClasses: Record<string, string> = {
   right: "inset-0 items-center justify-end text-right pe-8 md:pe-20",
 };
 
-export default function ScrollOverlay({ frame }: ScrollOverlayProps) {
+export default function ScrollOverlay({ frame, isVisible = true }: ScrollOverlayProps) {
   const scene = sceneForFrame(frame);
   const opacity = overlayOpacity(scene, frame);
   const posClass = positionClasses[scene.textAlign];
@@ -23,6 +24,9 @@ export default function ScrollOverlay({ frame }: ScrollOverlayProps) {
       ? Math.min(Math.max((frame - scene.start) / (scene.end - scene.start || 1), 0), 1)
       : 0;
   const translateY = scene.id === 4 ? -60 + localT * 60 : 0;
+
+  // ✅ إذا كان isVisible false، لا نعرض أي شيء
+  if (!isVisible) return null;
 
   return (
     <div
