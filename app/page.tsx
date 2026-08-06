@@ -1,12 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import BackgroundCanvas from "@/components/BackgroundCanvas";
 import ScrollOverlay from "@/components/ScrollOverlay";
-import LoadingScreen from "@/components/LoadingScreen";
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
-import StorySection from "@/components/StorySection";
 import FeaturesSection from "@/components/FeaturesSection";
 import VisionSection from "@/components/VisionSection";
 import CTASection from "@/components/CTASection";
@@ -24,16 +21,8 @@ const jsonLd = {
 };
 
 export default function Home() {
-  const { loaded, ready, images } = useFramePreloader();
+  const { images } = useFramePreloader();
   const { frame } = useScrollFrame();
-  const [showLoader, setShowLoader] = useState(true);
-
-  useEffect(() => {
-    if (ready) {
-      const t = setTimeout(() => setShowLoader(false), 400);
-      return () => clearTimeout(t);
-    }
-  }, [ready]);
 
   return (
     <>
@@ -41,8 +30,6 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-
-      <LoadingScreen progress={loaded} visible={showLoader} />
 
       <div id="top" />
       <BackgroundCanvas images={images} frame={frame} />
@@ -54,7 +41,6 @@ export default function Home() {
         <FeaturesSection />
         <VisionSection />
         <CTASection />
-        
       </main>
     </>
   );
