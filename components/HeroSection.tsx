@@ -42,7 +42,7 @@ export default function HeroSection() {
       <div 
         className="absolute inset-0 z-0"
         style={{
-          backgroundImage: "url('/hero-bg.jpg')",
+          backgroundImage: "url('/hero-bg.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -70,7 +70,7 @@ export default function HeroSection() {
           <span className="text-white/80"> .. </span>
           <span className="text-white">فخر الصناعة اليمنية</span>
           <br />
-          <span className="text-white/90">من خيرات أرضنا</span>
+          <span className="text-white/90">ليدر</span>
         </motion.h1>
 
         {/* ✅ العنوان الفرعي - أنميشن تلاشي + لون أبيض */}
