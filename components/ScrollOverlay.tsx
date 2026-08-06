@@ -25,6 +25,7 @@ export default function ScrollOverlay({ frame, isVisible = true }: ScrollOverlay
       : 0;
   const translateY = scene.id === 4 ? -60 + localT * 60 : 0;
 
+  // ✅ إذا كان isVisible false، لا نعرض أي شيء
   if (!isVisible) return null;
 
   return (
