@@ -27,6 +27,8 @@ export default function Home() {
   const heroRef = useRef<HTMLDivElement>(null);
   const [heroHidden, setHeroHidden] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [showVideo, setShowVideo] = useState(true);
+  const [showSections, setShowSections] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,12 +45,16 @@ export default function Home() {
       
       if (progress >= 0.95) {
         setHeroHidden(true);
+        setShowVideo(false); // ✅ إخفاء الفيديو
+        setShowSections(true); // ✅ إظهار الأقسام
         const remainingScroll = window.scrollY - heroHeight * 0.7;
         const maxRemaining = document.documentElement.scrollHeight - window.innerHeight - heroHeight * 0.7;
         const afterProgress = maxRemaining > 0 ? Math.min(remainingScroll / maxRemaining, 1) : 0;
         setScrollProgress(afterProgress);
       } else {
         setHeroHidden(false);
+        setShowVideo(true); // ✅ إظهار الفيديو
+        setShowSections(false); // ✅ إخفاء الأقسام
         setScrollProgress(0);
       }
     };
@@ -68,11 +74,11 @@ export default function Home() {
 
       <div id="top" />
       
-      {/* خلفية الفيديو - ثابتة في الخلفية */}
+      {/* ✅ الفيديو - يظهر في البداية، ثم يختفي */}
       <div 
         className="fixed inset-0 z-0 transition-opacity duration-700"
         style={{
-          opacity: heroHidden ? 1 : 0,
+          opacity: showVideo ? 1 : 0,
           pointerEvents: 'none',
         }}
       >
@@ -86,13 +92,17 @@ export default function Home() {
           <HeroSection />
         </div>
 
-        {/* 2. ScrollOverlay (الهيلبر) - يظهر فوق الفيديو فقط */}
+        {/* 2. ScrollOverlay (الهيلبر) */}
         <div className="relative z-10 pointer-events-none">
           <ScrollOverlay frame={adjustedFrame} isVisible={heroHidden} />
         </div>
         
-        {/* 3. باقي الأقسام - تظهر بعد الهيلبر */}
-        <div className="relative z-20">
+        {/* 3. باقي الأقسام - تظهر فقط بعد اختفاء الفيديو */}
+        <div 
+          className={`relative z-20 transition-opacity duration-700 ${
+            showSections ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`}
+        >
           <FeaturesSection />
           <VisionSection />
           <CTASection />
