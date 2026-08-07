@@ -43,7 +43,6 @@ export default function Home() {
       
       if (progress >= 0.95) {
         setHeroHidden(true);
-        // ✅ حساب نسبة التمرير بعد اختفاء الهيرو
         const remainingScroll = window.scrollY - heroHeight * 0.7;
         const maxRemaining = document.documentElement.scrollHeight - window.innerHeight - heroHeight * 0.7;
         const afterProgress = maxRemaining > 0 ? Math.min(remainingScroll / maxRemaining, 1) : 0;
@@ -58,7 +57,6 @@ export default function Home() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // ✅ حساب الإطار بناءً على نسبة التمرير بعد اختفاء الهيرو
   const adjustedFrame = heroHidden ? Math.floor(scrollProgress * 119) : 0;
 
   return (
@@ -70,6 +68,7 @@ export default function Home() {
 
       <div id="top" />
       
+      {/* خلفية الفيديو - ثابتة في الخلفية */}
       <div 
         className="fixed inset-0 z-0 transition-opacity duration-700"
         style={{
@@ -82,20 +81,24 @@ export default function Home() {
 
       <Navigation />
       <main className="relative">
+        {/* 1. HeroSection */}
         <div ref={heroRef} className="relative z-10">
           <HeroSection />
         </div>
 
-        <div className="relative z-10">
+        {/* 2. ScrollOverlay (الهيلبر) - يظهر فوق الفيديو فقط */}
+        <div className="relative z-10 pointer-events-none">
           <ScrollOverlay frame={adjustedFrame} isVisible={heroHidden} />
         </div>
         
-        <div className="relative z-10">
+        {/* 3. باقي الأقسام - تظهر بعد الهيلبر */}
+        <div className="relative z-20 bg-white/80 backdrop-blur-sm">
           <FeaturesSection />
           <VisionSection />
           <CTASection />
         </div>
 
+        {/* مسافة تمرير إضافية */}
         <div className="h-48 md:h-64 lg:h-80" />
       </main>
     </>
