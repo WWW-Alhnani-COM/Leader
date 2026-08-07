@@ -26,13 +26,7 @@ export default function Home() {
   const { frame } = useScrollFrame();
   const heroRef = useRef<HTMLDivElement>(null);
   const [heroHidden, setHeroHidden] = useState(false);
-  const [startFrame, setStartFrame] = useState(0);
-  const frameRef = useRef(0);
-
-  // تتبع قيمة الفريم الحالية
-  useEffect(() => {
-    frameRef.current = frame;
-  }, [frame]);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,26 +36,28 @@ export default function Home() {
       const heroHeight = hero.offsetHeight;
       const scrollY = window.scrollY;
       
-      const scrollProgress = Math.max(0, Math.min(1, scrollY / (heroHeight * 0.7)));
+      const progress = Math.max(0, Math.min(1, scrollY / (heroHeight * 0.7)));
       
-      hero.style.opacity = String(1 - scrollProgress);
-      hero.style.transform = `translateY(${-scrollProgress * 80}px) scale(${1 - scrollProgress * 0.05})`;
+      hero.style.opacity = String(1 - progress);
+      hero.style.transform = `translateY(${-progress * 80}px) scale(${1 - progress * 0.05})`;
       
-      // ✅ عندما يختفي الهيرو، نحفظ قيمة الفريم الحالية كقيمة بداية
-      if (scrollProgress >= 0.95 && !heroHidden) {
+      if (progress >= 0.95) {
         setHeroHidden(true);
-        setStartFrame(frameRef.current);
-      } else if (scrollProgress < 0.95 && heroHidden) {
+        const remainingScroll = window.scrollY - heroHeight * 0.7;
+        const maxRemaining = document.documentElement.scrollHeight - window.innerHeight - heroHeight * 0.7;
+        const afterProgress = maxRemaining > 0 ? Math.min(remainingScroll / maxRemaining, 1) : 0;
+        setScrollProgress(afterProgress);
+      } else {
         setHeroHidden(false);
+        setScrollProgress(0);
       }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [heroHidden]);
+  }, []);
 
-  // ✅ حساب الفريم المعدل (يبدأ من 0 عند اختفاء الهيرو)
-  const adjustedFrame = heroHidden ? Math.max(0, frame - startFrame) : 0;
+  const adjustedFrame = heroHidden ? Math.floor(scrollProgress * 119) : 0;
 
   return (
     <>
@@ -72,7 +68,7 @@ export default function Home() {
 
       <div id="top" />
       
-      {/* خلفية الفيديو */}
+      {/* خلفية الفيديو - ثابتة في الخلفية */}
       <div 
         className="fixed inset-0 z-0 transition-opacity duration-700"
         style={{
@@ -85,26 +81,26 @@ export default function Home() {
 
       <Navigation />
       <main className="relative">
-        {/* HeroSection */}
+        {/* 1. HeroSection */}
         <div ref={heroRef} className="relative z-10">
           <HeroSection />
         </div>
 
-        {/* الهيلبر - مع الفريم المعدل */}
-        <div className="relative z-10">
+        {/* 2. ScrollOverlay (الهيلبر) - يظهر فوق الفيديو فقط */}
+        <div className="relative z-10 pointer-events-none">
           <ScrollOverlay frame={adjustedFrame} isVisible={heroHidden} />
         </div>
         
-        {/* باقي الأقسام */}
-        <div className="relative z-10">
+        {/* 3. باقي الأقسام - تظهر بعد الهيلبر */}
+        <div className="relative z-20 bg-white/80 backdrop-blur-sm">
           <FeaturesSection />
           <VisionSection />
           <CTASection />
         </div>
 
-        {/* ✅ مسافة تمرير إضافية لضمان الوصول إلى الإطار 120 */}
-        <div className="h-32 md:h-48 lg:h-64" />
+        {/* مسافة تمرير إضافية */}
+        <div className="h-48 md:h-64 lg:h-80" />
       </main>
     </>
   );
-}
+        }
