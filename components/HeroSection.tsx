@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 // ============================================
 // ✅ Typewriter Component
@@ -33,6 +34,20 @@ const Typewriter = ({ text, delay = 0 }: { text: string; delay?: number }) => {
 // ============================================
 
 export default function HeroSection() {
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      // كلما بدأ التمرير، تزيد القيمة من 0 إلى 1 تدريجياً خلال أول 300 بكسل
+      const progress = Math.min(scrollY / 300, 1);
+      setScrollProgress(progress);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <section
       id="hero"
@@ -68,11 +83,12 @@ export default function HeroSection() {
           }}
         />
 
-        {/* ✅ طبقة زجاجية خفيفة من الأسفل */}
+        {/* ✅ طبقة زجاجية مع تلاشي (تظهر تدريجياً فقط عند التمرير) */}
         <div 
-          className="absolute inset-x-0 bottom-0 h-36 backdrop-blur-[6px]"
+          className="absolute inset-x-0 bottom-0 h-40 backdrop-blur-[8px] transition-opacity duration-200"
           style={{
-            background: "linear-gradient(to top, rgba(255, 255, 255, 0.2) 0%, transparent 100%)",
+            opacity: scrollProgress,
+            background: "linear-gradient(to top, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.05) 50%, transparent 100%)",
           }}
         />
       </div>
@@ -120,4 +136,3 @@ export default function HeroSection() {
     </section>
   );
 }
-
