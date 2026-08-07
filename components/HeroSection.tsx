@@ -67,6 +67,14 @@ export default function HeroSection() {
             background: "linear-gradient(180deg, transparent 75%, rgba(242,140,40,0.30) 100%)",
           }}
         />
+
+        {/* ✅ طبقة زجاجية خفيفة من الأسفل */}
+        <div 
+          className="absolute inset-x-0 bottom-0 h-36 backdrop-blur-[6px]"
+          style={{
+            background: "linear-gradient(to top, rgba(255, 255, 255, 0.2) 0%, transparent 100%)",
+          }}
+        />
       </div>
 
       {/* المحتوى */}
@@ -112,3 +120,4 @@ export default function HeroSection() {
     </section>
   );
 }
+
