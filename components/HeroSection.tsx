@@ -38,9 +38,9 @@ export default function HeroSection() {
       id="hero"
       className="relative flex min-h-screen items-center justify-center px-6 py-24 overflow-hidden"
     >
-      {/* حاوية الصورة مع clip-path لمنع ظهور الحواف */}
+      {/* حاوية الصورة مع منع overflow */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        {/* ✅ صورة الخلفية */}
+        {/* ✅ صورة الخلفية - مكبرة قليلاً */}
         <div 
           className="absolute inset-0"
           style={{
@@ -60,11 +60,11 @@ export default function HeroSection() {
           }}
         />
         
-        {/* ✅ طبقة سفلية لإخفاء الحواف */}
+        {/* ✅ تلاشي برتقالي من الأسفل */}
         <div 
           className="absolute inset-0"
           style={{
-            background: "linear-gradient(180deg, transparent 75%, rgba(242,140,40,0.30) 100%)",
+            background: "linear-gradient(180deg, transparent 60%, rgba(242,140,40,0.20) 80%, rgba(242,140,40,0.40) 100%)",
           }}
         />
       </div>
