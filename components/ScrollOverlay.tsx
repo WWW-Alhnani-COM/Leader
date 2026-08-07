@@ -25,13 +25,13 @@ export default function ScrollOverlay({ frame, isVisible = true }: ScrollOverlay
       : 0;
   const translateY = scene.id === 4 ? -60 + localT * 60 : 0;
 
-  // ✅ إذا كان isVisible false، لا نعرض أي شيء
   if (!isVisible) return null;
 
   return (
     <div
       dir="ltr"
-      className={`pointer-events-none fixed z-[5] flex px-6 ${posClass}`}
+      className={`pointer-events-none fixed flex px-6 ${posClass}`}
+      style={{ zIndex: 5 }} // ✅ تغيير z-index إلى 5 بدلاً من z-[5]
       aria-hidden={opacity < 0.05}
     >
       <AnimatePresence mode="wait">
