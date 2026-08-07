@@ -26,9 +26,13 @@ export default function Home() {
   const { frame } = useScrollFrame();
   const heroRef = useRef<HTMLDivElement>(null);
   const [heroHidden, setHeroHidden] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [showVideo, setShowVideo] = useState(true);
-  const [showSections, setShowSections] = useState(false);
+  const [startFrame, setStartFrame] = useState(0);
+  const frameRef = useRef(0);
+
+  // تتبع قيمة الفريم الحالية
+  useEffect(() => {
+    frameRef.current = frame;
+  }, [frame]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,32 +42,26 @@ export default function Home() {
       const heroHeight = hero.offsetHeight;
       const scrollY = window.scrollY;
       
-      const progress = Math.max(0, Math.min(1, scrollY / (heroHeight * 0.7)));
+      const scrollProgress = Math.max(0, Math.min(1, scrollY / (heroHeight * 0.7)));
       
-      hero.style.opacity = String(1 - progress);
-      hero.style.transform = `translateY(${-progress * 80}px) scale(${1 - progress * 0.05})`;
+      hero.style.opacity = String(1 - scrollProgress);
+      hero.style.transform = `translateY(${-scrollProgress * 80}px) scale(${1 - scrollProgress * 0.05})`;
       
-      if (progress >= 0.95) {
+      // ✅ عندما يختفي الهيرو، نحفظ قيمة الفريم الحالية كقيمة بداية
+      if (scrollProgress >= 0.95 && !heroHidden) {
         setHeroHidden(true);
-        setShowVideo(false); // ✅ إخفاء الفيديو
-        setShowSections(true); // ✅ إظهار الأقسام
-        const remainingScroll = window.scrollY - heroHeight * 0.7;
-        const maxRemaining = document.documentElement.scrollHeight - window.innerHeight - heroHeight * 0.7;
-        const afterProgress = maxRemaining > 0 ? Math.min(remainingScroll / maxRemaining, 1) : 0;
-        setScrollProgress(afterProgress);
-      } else {
+        setStartFrame(frameRef.current);
+      } else if (scrollProgress < 0.95 && heroHidden) {
         setHeroHidden(false);
-        setShowVideo(true); // ✅ إظهار الفيديو
-        setShowSections(false); // ✅ إخفاء الأقسام
-        setScrollProgress(0);
       }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [heroHidden]);
 
-  const adjustedFrame = heroHidden ? Math.floor(scrollProgress * 119) : 0;
+  // ✅ حساب الفريم المعدل (يبدأ من 0 عند اختفاء الهيرو)
+  const adjustedFrame = heroHidden ? Math.max(0, frame - startFrame) : 0;
 
   return (
     <>
@@ -74,11 +72,11 @@ export default function Home() {
 
       <div id="top" />
       
-      {/* ✅ الفيديو - يظهر في البداية، ثم يختفي */}
+      {/* خلفية الفيديو */}
       <div 
         className="fixed inset-0 z-0 transition-opacity duration-700"
         style={{
-          opacity: showVideo ? 1 : 0,
+          opacity: heroHidden ? 1 : 0,
           pointerEvents: 'none',
         }}
       >
@@ -87,29 +85,25 @@ export default function Home() {
 
       <Navigation />
       <main className="relative">
-        {/* 1. HeroSection */}
+        {/* HeroSection */}
         <div ref={heroRef} className="relative z-10">
           <HeroSection />
         </div>
 
-        {/* 2. ScrollOverlay (الهيلبر) */}
-        <div className="relative z-10 pointer-events-none">
+        {/* الهيلبر - مع الفريم المعدل */}
+        <div className="relative z-10">
           <ScrollOverlay frame={adjustedFrame} isVisible={heroHidden} />
         </div>
         
-        {/* 3. باقي الأقسام - تظهر فقط بعد اختفاء الفيديو */}
-        <div 
-          className={`relative z-20 transition-opacity duration-700 ${
-            showSections ? 'opacity-100' : 'opacity-0 pointer-events-none'
-          }`}
-        >
+        {/* باقي الأقسام */}
+        <div className="relative z-10">
           <FeaturesSection />
           <VisionSection />
           <CTASection />
         </div>
 
-        {/* مسافة تمرير إضافية */}
-        <div className="h-48 md:h-64 lg:h-80" />
+        {/* ✅ مسافة تمرير إضافية لضمان الوصول إلى الإطار 120 */}
+        <div className="h-32 md:h-48 lg:h-64" />
       </main>
     </>
   );
