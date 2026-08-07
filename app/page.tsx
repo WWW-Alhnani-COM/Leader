@@ -5,6 +5,7 @@ import BackgroundCanvas from "@/components/BackgroundCanvas";
 import ScrollOverlay from "@/components/ScrollOverlay";
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
+import NewSection from "@/components/NewSection";
 import FeaturesSection from "@/components/FeaturesSection";
 import VisionSection from "@/components/VisionSection";
 import CTASection from "@/components/CTASection";
@@ -92,12 +93,12 @@ export default function Home() {
         <div ref={scrollSectionRef} className="relative h-[300vh] z-10">
           <div className="sticky top-0 h-screen flex items-center justify-center pointer-events-none">
             <ScrollOverlay frame={adjustedFrame} isVisible={isVideoActive} />
-
           </div>
         </div>
         
-        {/* 3. باقي الأقسام */}
+        {/* 3. باقي الأقسام والـقسم الجديد */}
         <div className="relative z-20">
+          <NewSection />
           <FeaturesSection />
           <VisionSection />
           <CTASection />
