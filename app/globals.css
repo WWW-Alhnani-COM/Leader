@@ -18,7 +18,12 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden; /* نقلناها إلى هنا لحل المشكلة نهائياً */
+  max-width: 100vw;
 }
+
+
+
 
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -38,6 +43,8 @@ body {
   color: var(--color-ink);
   direction: rtl;
   overflow-x: hidden;
+  max-width: 100vw;
+  position: relative;
 }
 
 ::selection {
