@@ -24,32 +24,34 @@ const jsonLd = {
 export default function Home() {
   const { images } = useFramePreloader();
   const { frame } = useScrollFrame();
-  const heroRef = useRef<HTMLDivElement>(null);
-  const [heroHidden, setHeroHidden] = useState(false);
+  
+  // مرجع خاص لقسم "اسكرول"
+  const scrollSectionRef = useRef<HTMLDivElement>(null);
+  const [isVideoActive, setIsVideoActive] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      const hero = heroRef.current;
-      if (!hero) return;
-      
-      const heroHeight = hero.offsetHeight;
-      const scrollY = window.scrollY;
-      
-      const progress = Math.max(0, Math.min(1, scrollY / (heroHeight * 0.7)));
-      
-      hero.style.opacity = String(1 - progress);
-      hero.style.transform = `translateY(${-progress * 80}px) scale(${1 - progress * 0.05})`;
-      
-      if (progress >= 0.95) {
-        setHeroHidden(true);
-        const remainingScroll = window.scrollY - heroHeight * 0.7;
-        const maxRemaining = document.documentElement.scrollHeight - window.innerHeight - heroHeight * 0.7;
-        const afterProgress = maxRemaining > 0 ? Math.min(remainingScroll / maxRemaining, 1) : 0;
-        setScrollProgress(afterProgress);
-      } else {
-        setHeroHidden(false);
+      const section = scrollSectionRef.current;
+      if (!section) return;
+
+      const rect = section.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      // حساب تقدم التمرير داخل قسم "اسكرول" فقط
+      const sectionTop = rect.top;
+      const sectionHeight = rect.height;
+
+      if (sectionTop <= 0 && -sectionTop < sectionHeight - windowHeight) {
+        setIsVideoActive(true);
+        const progress = Math.abs(sectionTop) / (sectionHeight - windowHeight);
+        setScrollProgress(Math.max(0, Math.min(1, progress)));
+      } else if (sectionTop > 0) {
+        setIsVideoActive(false);
         setScrollProgress(0);
+      } else {
+        setIsVideoActive(false);
+        setScrollProgress(1);
       }
     };
 
@@ -57,7 +59,7 @@ export default function Home() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const adjustedFrame = heroHidden ? Math.floor(scrollProgress * 119) : 0;
+  const adjustedFrame = isVideoActive ? Math.floor(scrollProgress * 119) : 0;
 
   return (
     <>
@@ -68,11 +70,11 @@ export default function Home() {
 
       <div id="top" />
       
-      {/* خلفية الفيديو - ثابتة في الخلفية */}
+      {/* خلفية الفيديو التفاعلية - تظهر وتتفاعل فقط عندما يكون المستخدم في قسم اسكرول */}
       <div 
         className="fixed inset-0 z-0 transition-opacity duration-700"
         style={{
-          opacity: heroHidden ? 1 : 0,
+          opacity: isVideoActive ? 1 : 0,
           pointerEvents: 'none',
         }}
       >
@@ -81,17 +83,19 @@ export default function Home() {
 
       <Navigation />
       <main className="relative">
-        {/* 1. HeroSection */}
-        <div ref={heroRef} className="relative z-10">
+        {/* 1. HeroSection الطبيعي */}
+        <div className="relative z-10">
           <HeroSection />
         </div>
 
-        {/* 2. ScrollOverlay (الهيلبر) - يظهر فوق الفيديو فقط */}
-        <div className="relative z-10 pointer-events-none">
-          <ScrollOverlay frame={adjustedFrame} isVisible={heroHidden} />
+        {/* 2. قسم "اسكرول" الخاص بالفيديو التفاعلي (بارتفاع 300vh ليعطي مساحة للتمرير) */}
+        <div ref={scrollSectionRef} className="relative h-[300vh] z-10">
+          <div className="sticky top-0 h-screen flex items-center justify-center pointer-events-none">
+            <ScrollOverlay frame={adjustedFrame} isVideoActive={isVideoActive} />
+          </div>
         </div>
         
-        {/* 3. باقي الأقسام - تظهر بعد الهيلبر */}
+        {/* 3. باقي الأقسام */}
         <div className="relative z-20">
           <FeaturesSection />
           <VisionSection />
