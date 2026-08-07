@@ -92,7 +92,7 @@ export default function Home() {
         </div>
         
         {/* 3. باقي الأقسام - تظهر بعد الهيلبر */}
-        <div className="relative z-20 bg-white/80 backdrop-blur-sm">
+        <div className="relative z-20">
           <FeaturesSection />
           <VisionSection />
           <CTASection />
@@ -103,4 +103,4 @@ export default function Home() {
       </main>
     </>
   );
-        }
+}
