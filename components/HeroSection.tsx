@@ -39,8 +39,8 @@ export default function HeroSection() {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      // كلما بدأ التمرير، تزيد القيمة من 0 إلى 1 تدريجياً خلال أول 300 بكسل
-      const progress = Math.min(scrollY / 300, 1);
+      // حساب التمرير بنسبة مئوية (تبدأ من 0 وتنتهي عند 400 بكسل تمرير)
+      const progress = Math.min(scrollY / 400, 1);
       setScrollProgress(progress);
     };
 
@@ -83,12 +83,14 @@ export default function HeroSection() {
           }}
         />
 
-        {/* ✅ طبقة زجاجية مع تلاشي (تظهر تدريجياً فقط عند التمرير) */}
+        {/* ✅ طبقة زجاجية متدرجة ومتلاشية تظهر حصرياً عند التمرير */}
         <div 
-          className="absolute inset-x-0 bottom-0 h-40 backdrop-blur-[8px] transition-opacity duration-200"
+          className="absolute inset-x-0 bottom-0 h-48 transition-opacity duration-300"
           style={{
             opacity: scrollProgress,
-            background: "linear-gradient(to top, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.05) 50%, transparent 100%)",
+            backdropFilter: "blur(10px)",
+            WebkitBackdropFilter: "blur(10px)",
+            background: "linear-gradient(to top, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.20) 50%, rgba(255, 255, 255, 0.05) 80%, transparent 100%)",
           }}
         />
       </div>
