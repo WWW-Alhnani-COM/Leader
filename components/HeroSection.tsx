@@ -38,37 +38,39 @@ export default function HeroSection() {
       id="hero"
       className="relative flex min-h-screen items-center justify-center px-6 py-24 overflow-hidden"
     >
-      {/* ✅ صورة الخلفية مع scale للتكبير ومنع ظهور الحواف */}
-      <div 
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundImage: "url('/hero-bg.jpeg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          transform: "scale(1.1)", // ✅ تكبير الصورة قليلاً لمنع ظهور الحواف
-        }}
-      />
-      
-      {/* ✅ تدرج برتقالي أقوى (زيادة الشفافية) */}
-      <div 
-        className="absolute inset-0 z-0"
-        style={{
-          background: "linear-gradient(135deg, rgba(248,201,40,0.35) 0%, rgba(242,140,40,0.50) 40%, rgba(248,201,40,0.30) 70%, rgba(242,140,40,0.15) 100%)",
-        }}
-      />
-      
-      {/* ✅ طبقة سفلية لمنع ظهور أي حواف عند التمرير */}
-      <div 
-        className="absolute inset-0 z-0"
-        style={{
-          background: "linear-gradient(180deg, transparent 80%, rgba(242,140,40,0.20) 100%)",
-        }}
-      />
+      {/* حاوية الصورة مع clip-path لمنع ظهور الحواف */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        {/* ✅ صورة الخلفية */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            backgroundImage: "url('/hero-bg.jpeg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            transform: "scale(1.15)",
+          }}
+        />
+        
+        {/* ✅ تدرج برتقالي */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: "linear-gradient(135deg, rgba(248,201,40,0.35) 0%, rgba(242,140,40,0.50) 40%, rgba(248,201,40,0.30) 70%, rgba(242,140,40,0.15) 100%)",
+          }}
+        />
+        
+        {/* ✅ طبقة سفلية لإخفاء الحواف */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: "linear-gradient(180deg, transparent 75%, rgba(242,140,40,0.30) 100%)",
+          }}
+        />
+      </div>
 
       {/* المحتوى */}
       <div className="relative z-10 mx-auto max-w-3xl text-center">
-        {/* ✅ العنوان الرئيسي */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -82,7 +84,6 @@ export default function HeroSection() {
           <span className="text-white/90">ليدر</span>
         </motion.h1>
 
-        {/* ✅ العنوان الفرعي */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -92,7 +93,6 @@ export default function HeroSection() {
           جرب و بيننا
         </motion.p>
 
-        {/* ✅ زر CTA */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
