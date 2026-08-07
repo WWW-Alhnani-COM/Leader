@@ -91,7 +91,8 @@ export default function Home() {
         {/* 2. قسم "اسكرول" الخاص بالفيديو التفاعلي (بارتفاع 300vh ليعطي مساحة للتمرير) */}
         <div ref={scrollSectionRef} className="relative h-[300vh] z-10">
           <div className="sticky top-0 h-screen flex items-center justify-center pointer-events-none">
-            <ScrollOverlay frame={adjustedFrame} isVideoActive={isVideoActive} />
+            <ScrollOverlay frame={adjustedFrame} isVisible={isVideoActive} />
+
           </div>
         </div>
         
