@@ -5,7 +5,6 @@ import BackgroundCanvas from "@/components/BackgroundCanvas";
 import ScrollOverlay from "@/components/ScrollOverlay";
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
-import NewSection from "@/components/NewSection";
 import FeaturesSection from "@/components/FeaturesSection";
 import VisionSection from "@/components/VisionSection";
 import CTASection from "@/components/CTASection";
@@ -25,7 +24,7 @@ const jsonLd = {
 export default function Home() {
   const { images } = useFramePreloader();
   const { frame } = useScrollFrame();
-  
+
   // مرجع خاص لقسم "اسكرول"
   const scrollSectionRef = useRef<HTMLDivElement>(null);
   const [isVideoActive, setIsVideoActive] = useState(false);
@@ -38,8 +37,6 @@ export default function Home() {
 
       const rect = section.getBoundingClientRect();
       const windowHeight = window.innerHeight;
-
-      // حساب تقدم التمرير داخل قسم "اسكرول" فقط
       const sectionTop = rect.top;
       const sectionHeight = rect.height;
 
@@ -56,8 +53,8 @@ export default function Home() {
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const adjustedFrame = isVideoActive ? Math.floor(scrollProgress * 119) : 0;
@@ -70,13 +67,13 @@ export default function Home() {
       />
 
       <div id="top" />
-      
+
       {/* خلفية الفيديو التفاعلية - تظهر وتتفاعل فقط عندما يكون المستخدم في قسم اسكرول */}
-      <div 
+      <div
         className="fixed inset-0 z-0 transition-opacity duration-700"
         style={{
           opacity: isVideoActive ? 1 : 0,
-          pointerEvents: 'none',
+          pointerEvents: "none",
         }}
       >
         <BackgroundCanvas images={images} frame={adjustedFrame} />
@@ -89,16 +86,15 @@ export default function Home() {
           <HeroSection />
         </div>
 
-        {/* 2. قسم "اسكرول" الخاص بالفيديو التفاعلي (بارتفاع 300vh ليعطي مساحة للتمرير) */}
+        {/* 2. قسم الفيديو التفاعلي */}
         <div ref={scrollSectionRef} className="relative h-[300vh] z-10">
           <div className="sticky top-0 h-screen flex items-center justify-center pointer-events-none">
             <ScrollOverlay frame={adjustedFrame} isVisible={isVideoActive} />
           </div>
         </div>
-        
-        {/* 3. باقي الأقسام والـقسم الجديد */}
+
+        {/* باقي الأقسام بعد انتهاء الفيديو التفاعلي */}
         <div className="relative z-20">
-          <NewSection />
           <FeaturesSection />
           <VisionSection />
           <CTASection />
