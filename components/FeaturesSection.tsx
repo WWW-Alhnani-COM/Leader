@@ -40,7 +40,7 @@ export default function FeaturesSection() {
     <section
       ref={containerRef}
       id="features"
-      className="relative min-h-screen overflow-hidden py-32 px-6 bg-slate-950 text-white flex items-center"
+      className="relative min-h-screen overflow-hidden py-32 px-6 bg-[#f8c928] text-[#1a1a1a] flex items-center"
     >
       {/* خلفية تفاعلية متحركة (Parallax Background) */}
       <motion.div
@@ -63,7 +63,7 @@ export default function FeaturesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-amber-400 font-bold tracking-wider uppercase text-sm sm:text-base bg-amber-500/10 px-5 py-2 rounded-full border border-amber-500/20 inline-block"
+            className="text-[#1a1a1a] font-bold tracking-wider uppercase text-sm sm:text-base bg-white/35 px-5 py-2 rounded-full border border-[#1a1a1a]/15 inline-block"
           >
             المميزات والفوائد
           </motion.span>
@@ -73,7 +73,7 @@ export default function FeaturesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-6 font-cairo text-3xl md:text-5xl font-extrabold tracking-tight text-white"
+            className="mt-6 font-cairo text-3xl md:text-5xl font-extrabold tracking-tight text-[#1a1a1a]"
           >
             لماذا تختار عصير ليدر؟
           </motion.h2>
@@ -83,7 +83,7 @@ export default function FeaturesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="mt-4 text-gray-400 max-w-2xl mx-auto text-base sm:text-lg font-medium"
+            className="mt-4 text-[#3f3514] max-w-2xl mx-auto text-base sm:text-lg font-medium"
           >
             نحول المواصفات التقنية الفاخرة إلى فوائد ملموسة تغذي حواسك وتدعم صحتك كل يوم.
           </motion.p>
@@ -99,7 +99,7 @@ export default function FeaturesSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 * index }}
               whileHover={{ y: -10, transition: { duration: 0.3 } }}
-              className="relative p-8 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-xl shadow-2xl overflow-hidden group"
+              className="relative p-8 rounded-3xl bg-white/90 border border-white/70 backdrop-blur-xl shadow-2xl overflow-hidden group"
             >
               {/* تدرج مضيء يظهر عند تمرير الماوس */}
               <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
@@ -108,16 +108,16 @@ export default function FeaturesSection() {
                 <div className="text-4xl p-4 w-fit rounded-2xl bg-amber-500/10 border border-amber-500/20 shadow-inner">
                   {feature.icon}
                 </div>
-                <span className="text-xs font-semibold text-amber-400 bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/20">
+                <span className="text-xs font-semibold text-[#6b4d00] bg-[#f8c928]/25 px-3 py-1 rounded-full border border-[#b98c00]/25">
                   {feature.badge}
                 </span>
               </div>
 
-              <h3 className="text-xl sm:text-2xl font-bold font-cairo mb-3 text-white group-hover:text-amber-300 transition-colors">
+              <h3 className="text-xl sm:text-2xl font-bold font-cairo mb-3 text-[#1a1a1a] group-hover:text-[#9a5b00] transition-colors">
                 {feature.title}
               </h3>
 
-              <p className="text-gray-400 text-sm sm:text-base leading-relaxed font-normal">
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed font-normal">
                 {feature.description}
               </p>
             </motion.div>
