@@ -1,4 +1,4 @@
-export const TOTAL_FRAMES = 130;
+export const TOTAL_FRAMES = 120;
 
 /** Clamp a number between min and max. */
 export function clamp(value: number, min: number, max: number): number {
@@ -26,14 +26,14 @@ export interface Scene {
   textAlign: "center" | "left" | "right";
   title: string;
   subtitle: string;
-  extraText?: string; // ✅ حقل جديد للنص الإضافي
+  extraText?: string;
 }
 
 export const SCENES: Scene[] = [
   {
     id: 1,
-    start: 0,
-    end: 29,
+    start: 23, // ezgif-frame-024.jpg
+    end: 51,   // frame 052
     entry: "top",
     textAlign: "center",
     title: "ليدر",
@@ -41,8 +41,8 @@ export const SCENES: Scene[] = [
   },
   {
     id: 2,
-    start: 30,
-    end: 59,
+    start: 52, // ezgif-frame-053.jpg
+    end: 79,   // frame 080
     entry: "right",
     textAlign: "left",
     title: "طعم الأصالة اليمنية",
@@ -50,8 +50,8 @@ export const SCENES: Scene[] = [
   },
   {
     id: 3,
-    start: 60,
-    end: 89,
+    start: 80, // ezgif-frame-081.jpg
+    end: 108,  // frame 109
     entry: "left",
     textAlign: "right",
     title: "فخر اليمن",
@@ -59,29 +59,28 @@ export const SCENES: Scene[] = [
   },
   {
     id: 4,
-    start: 90,
-    end: 119,
+    start: 109, // ezgif-frame-110.jpg
+    end: 119,  // ezgif-frame-120.jpg
     entry: "bottom",
     textAlign: "center",
     title: "المانجو الحقيقية",
     subtitle: "الطعم الذي يثبت نفسه",
-    extraText: "🇾🇪 منتج يمني 100%", // ✅ نص إضافي للمشهد الرابع
+    extraText: "منتج يمني 100%",
   },
 ];
 
-export function sceneForFrame(frame: number): Scene {
-  const found = SCENES.find((s) => frame >= s.start && frame <= s.end);
-  return found ?? SCENES[SCENES.length - 1];
+export function sceneForFrame(frame: number): Scene | null {
+  return SCENES.find((scene) => frame >= scene.start && frame <= scene.end) ?? null;
 }
 
 export function overlayOpacity(scene: Scene, frame: number): number {
   const span = scene.end - scene.start || 1;
   const t = clamp((frame - scene.start) / span, 0, 1);
-  
+
   if (scene.id === 4) {
     return 1;
   }
-  
+
   const fadeIn = clamp(t / 0.2, 0, 1);
   const fadeOut = clamp((1 - t) / 0.2, 0, 1);
   return Math.min(fadeIn, fadeOut, 1);
