@@ -169,7 +169,7 @@ export default function Home() {
 
       const rect = section.getBoundingClientRect();
       const approachingFromAbove =
-        event.deltaY > 0 && rect.top <= window.innerHeight && rect.bottom > 0;
+        event.deltaY > 0 && rect.top <= window.innerHeight * 1.15 && rect.bottom > 0;
       const approachingFromBelow =
         event.deltaY < 0 &&
         rect.top < 0 &&
