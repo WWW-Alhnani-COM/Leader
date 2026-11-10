@@ -16,6 +16,9 @@ const positionClasses: Record<string, string> = {
 
 export default function ScrollOverlay({ frame, isVisible = true }: ScrollOverlayProps) {
   const scene = sceneForFrame(frame);
+
+  if (!isVisible || !scene) return null;
+
   const opacity = overlayOpacity(scene, frame);
   const posClass = positionClasses[scene.textAlign];
 
@@ -25,13 +28,11 @@ export default function ScrollOverlay({ frame, isVisible = true }: ScrollOverlay
       : 0;
   const translateY = scene.id === 4 ? -60 + localT * 60 : 0;
 
-  if (!isVisible) return null;
-
   return (
     <div
       dir="ltr"
       className={`pointer-events-none fixed flex px-6 ${posClass}`}
-      style={{ zIndex: 5 }} // ✅ تغيير z-index إلى 5 بدلاً من z-[5]
+      style={{ zIndex: 5 }}
       aria-hidden={opacity < 0.05}
     >
       <AnimatePresence mode="wait">
@@ -49,8 +50,8 @@ export default function ScrollOverlay({ frame, isVisible = true }: ScrollOverlay
               {scene.title}
             </h2>
             <p className="mt-3 font-cairo text-3xl font-bold text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.2)] md:text-4xl [-webkit-text-stroke:0.5px_rgba(255,255,255,0.3)]">
-  {scene.subtitle}
-</p>
+              {scene.subtitle}
+            </p>
           </motion.div>
         )}
       </AnimatePresence>
