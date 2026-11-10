@@ -108,6 +108,10 @@ export default function Home() {
       isLocked = false;
       currentScene = direction === "before" ? -1 : SCENE_FRAMES.length;
       setIsVideoActive(false);
+      if (direction === "before") {
+        currentFrame = 0;
+        setFrame(0);
+      }
       scrollToSection(direction);
     };
 
@@ -129,7 +133,7 @@ export default function Home() {
         }
 
         // Capture the first downward gesture as the entrance to scene one.
-        if (rect.top <= window.innerHeight && rect.bottom > 0) {
+        if (rect.top <= window.innerHeight * 1.15 && rect.bottom > 0) {
           enterAtScene(0);
         }
         return;
@@ -197,7 +201,7 @@ export default function Home() {
       const rect = section.getBoundingClientRect();
       const nearStory =
         isLocked ||
-        (rect.top <= window.innerHeight && rect.bottom > 0) ||
+        (rect.top <= window.innerHeight * 1.15 && rect.bottom > 0) ||
         (rect.top < 0 && rect.bottom >= -window.innerHeight * 0.25);
 
       if (nearStory) {
